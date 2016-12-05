@@ -1,0 +1,47 @@
+body {
+  width: 500px;
+  background: #efefef;
+}
+
+#container {
+	padding: 6px;
+}
+
+#current-csp, #generated-csp {
+	min-height: 120px;
+	border: 1px solid #404040;
+	background: #fff;
+}
+
+.csp-entry {
+	margin: 5px 0;
+}
+
+fieldset {
+	border: none;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+
+label {
+	margin: 2px 0;
+}
+
+textarea {
+	width: 100%;
+}
+
+button {
+    background: #f24c27;
+    color: #fff !important;
+    transition: background-color 0.5s ease;
+    padding: 10px;
+    border: none;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#status {
+	display: inline-block;
+	color: #f24c27;
+}
