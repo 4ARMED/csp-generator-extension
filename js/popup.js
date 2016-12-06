@@ -28,10 +28,7 @@ $(function(){
 		});
 
 		// Update status to let user know options were saved.
-		$('#status').text('Options saved').addClass('alert alert-success');
-		setTimeout(function() {
-		  $('#status').text('').removeClass('alert alert-success');
-		}, 3000);
+		CSP.util.updateStatus('Options saved');
 	}
 
 	// Restores options state using the preferences
@@ -88,6 +85,8 @@ $(function(){
 	$('#save').click(function(event) {
 		event.preventDefault();
 		saveOptions();
+		setCSPHeaders();
+		$('#save').prop('disabled', true).addClass('btn-disabled');
 	});
 	$('#generate').click(function(event) {
 		event.preventDefault();
@@ -101,6 +100,7 @@ $(function(){
 		event.preventDefault();
 		$('#generated-csp').val(defaultCSPHeader);
 		$('#save').prop('disabled', false).removeClass('btn-disabled');
+		CSP.util.updateStatus('CSP Reset. Save and toggle CSP on/off to activate.');
 	});
 	$('input[name=csp]').change(function(event) {
 		event.preventDefault();

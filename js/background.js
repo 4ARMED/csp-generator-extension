@@ -2,9 +2,6 @@ var isActive = false;
 var cspHeaders;
 
 var callback = function(details) {
-  if (!isActive) {
-      return;
-  }
 
   for (var i = 0; i < details.responseHeaders.length; i++) {
     if ('content-security-policy' === details.responseHeaders[i].name.toLowerCase() || 'content-security-policy-report-only' === details.responseHeaders[i].name.toLowerCase()) {
@@ -12,11 +9,10 @@ var callback = function(details) {
     }
   }
 
-  console.log('[*] Adding CSP headers:');
-  console.log(cspHeaders);
-
-  // Add the CSP header we want
-  details.responseHeaders.push(cspHeaders);
+  if (isActive) {
+      // Add the CSP header we want
+      details.responseHeaders.push(cspHeaders);
+  }
 
   return {
     responseHeaders: details.responseHeaders

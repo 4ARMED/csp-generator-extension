@@ -35,10 +35,10 @@ CSP.util = {
     console.log(hack.host);
     return hack.host;
   },
-  setActive: function(state) {
-  	var details = {
-        path: "images/popup-" + state + ".png"
-    };
-    chrome.browserAction.setIcon(details);
+  updateStatus: function(text) {
+    $('#status').text(text).addClass('alert alert-success');
+    setTimeout(function() {
+      $('#status').text('').removeClass('alert alert-success');
+    }, 3000);
   }
 }
