@@ -1,11 +1,20 @@
 body {
   width: 500px;
   background: #efefef;
+  color: #666;
 }
 
-#container {
-	padding: 6px;
+h1 {
+	color: #f24c27;
+    font-weight: normal;
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 1.5em;
 }
+
+/*#container {
+	padding: 6px;
+}*/
 
 #current-csp, #generated-csp {
 	min-height: 150px;
@@ -15,18 +24,27 @@ body {
 	margin: 5px 0;
 }
 
-fieldset {
+/*fieldset {
 	border: none;
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 10px;
-}
+}*/
 
 label {
-	margin: 2px 0;
+    text-transform: uppercase;
+    color: #037e8c;
+    font-weight: normal;
 }
 
-textarea {
-	width: 100%;
+input[type='text'] {
+	padding: 1em!important;
+    text-indent: .25em;
+    border: 1px solid #d9d9d9;
+    border-radius: 0;
+}
+
+.nopadleft {
+	padding-left: 0px;
 }
 
 button {
@@ -39,7 +57,69 @@ button {
     margin-bottom: 5px;
 }
 
+button#save-report-uri {
+	padding: 6px 30px;
+	margin-right: 0;
+	margin-bottom: 0;
+}
+
 #status {
 	display: inline-block;
 	color: #f24c27;
+}
+
+
+.switch-field {
+  padding: 40px;
+    overflow: hidden;
+}
+
+.switch-title {
+  margin-bottom: 6px;
+}
+
+.switch-field input {
+  display: none;
+}
+
+.switch-field label {
+  float: left;
+}
+
+.switch-field label {
+  display: inline-block;
+  width: 60px;
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+  text-shadow: none;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition:    all 0.1s ease-in-out;
+  -ms-transition:     all 0.1s ease-in-out;
+  -o-transition:      all 0.1s ease-in-out;
+  transition:         all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+    cursor: pointer;
+}
+
+.switch-field input:checked + label {
+  background-color: #A5DC86;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+  border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+  border-radius: 0 4px 4px 0;
 }
