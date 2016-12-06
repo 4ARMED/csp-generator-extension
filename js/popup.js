@@ -1,6 +1,18 @@
 $(function(){
 
-	console.log('[*] page loaded');
+	var defaultCSPHeader = "default-src 'none'; script-src 'none'; connect-src 'none'; font-src 'none'; img-src 'none'; style-src 'none'; frame-src 'none'; report-uri https://csp.4armed.io/report;";
+
+	// Enable/disable interception
+	function setCSPHeaders() {
+		var cspHeaderStatus = $('input[name=csp]:checked', '#csp-generator').val();
+
+		CSP.browser.set({ 'cspHeaderStatus': cspHeaderStatus }, function(result){
+
+		});
+
+		// Tell the background.js the current CSP status
+		sendCSPStatus(cspHeaderStatus);
+	}
 
 	// Saves options to chrome.storage
 	function saveOptions() {
@@ -8,30 +20,31 @@ $(function(){
 		var generatedCSPHeaders = $('#generated-csp').val();
 		var cspHeaderStatus = $('input[name=csp]:checked', '#csp-generator').val();
 
-		console.log($('#generated-csp').val());
 		CSP.browser.set({ 'generatedCSPHeaders': generatedCSPHeaders }, function(result){
-			console.log('[*] generatedCSPHeaders:');
-			console.log(result);
+
 		});
 		CSP.browser.set({ 'cspHeaderStatus': cspHeaderStatus }, function(result){
-			console.log('[*] cspHeaderStatus:');
-			console.log(result);
+
 		});
 
 		// Update status to let user know options were saved.
-		$('#status').text('Options saved');
+		$('#status').text('Options saved').addClass('alert alert-success');
 		setTimeout(function() {
-		  $('#status').text('');
-		}, 5000);
+		  $('#status').text('').removeClass('alert alert-success');
+		}, 3000);
 	}
 
 	// Restores options state using the preferences
 	// stored in chrome.storage.
 	function restoreOptions() {
-		console.log('[*] restoreOptions called');
 		CSP.browser.get('cspHeaderStatus', function(item){
 			if (item.cspHeaderStatus) {
 				$('#'+item.cspHeaderStatus).prop("checked", true);
+				if (item.cspHeaderStatus == 'csp-off') {
+				    CSP.browser.setIcon('off');
+				} else {
+					CSP.browser.setIcon('on');
+				}
 			}
 		});
 
@@ -39,9 +52,11 @@ $(function(){
 			if (item.generatedCSPHeaders) {
 				$('#generated-csp').val(item.generatedCSPHeaders);
 			} else {
-				$('#generated-csp').val('No CSP header generated yet');
+				$('#generated-csp').val(defaultCSPHeader);
 			}
 		});
+
+		$('#save').prop('disabled', true).addClass('btn-disabled');
 	}
 
 	function sendGenerate() {
@@ -54,8 +69,13 @@ $(function(){
 		});
 	}
 
-	function clearGenerated() {
-		$('#generated-csp').val('');
+	function sendCSPStatus(status) {
+		console.log('[*] sendCSPStatus');
+		CSP.browser.get('generatedCSPHeaders', function(item){
+			chrome.runtime.sendMessage({ action: status, csp: item.generatedCSPHeaders }, function(response) {
+				console.log('[*] Unleash the Kraken!');
+			});
+		});
 	}
 
 	chrome.runtime.onMessage.addListener(function(request, sender){
@@ -72,10 +92,19 @@ $(function(){
 	$('#generate').click(function(event) {
 		event.preventDefault();
 		sendGenerate();
+		$('#save').prop('disabled', false).removeClass('btn-disabled');
 	});
-	$('#clear').click(function(event) {
+	$('#generated-csp').on('change keyup paste', function() {
+		$('#save').prop('disabled', false).removeClass('btn-disabled');
+	});
+	$('#reset').click(function(event) {
 		event.preventDefault();
-		clearGenerated();
+		$('#generated-csp').val(defaultCSPHeader);
+		$('#save').prop('disabled', false).removeClass('btn-disabled');
+	});
+	$('input[name=csp]').change(function(event) {
+		event.preventDefault();
+		setCSPHeaders();
 	});
 	$( restoreOptions ); 
 

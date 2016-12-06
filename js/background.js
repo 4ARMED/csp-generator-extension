@@ -1,4 +1,5 @@
 var isActive = false;
+var cspHeaders;
 
 var callback = function(details) {
   if (!isActive) {
@@ -11,8 +12,11 @@ var callback = function(details) {
     }
   }
 
+  console.log('[*] Adding CSP headers:');
+  console.log(cspHeaders);
+
   // Add the CSP header we want
-  details.responseHeaders.push({ "name": "Content-Security-Policy-Report-Only", "value":"default-src 'none'; script-src 'none'; connect-src 'none'; font-src 'none'; img-src 'none'; style-src 'none'; frame-src 'none'; report-uri https://csp.4armed.io/report;" });
+  details.responseHeaders.push(cspHeaders);
 
   return {
     responseHeaders: details.responseHeaders
@@ -33,5 +37,19 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       console.log(data);
       chrome.runtime.sendMessage(data);
     })
+  } else if (request.action == "csp-on") {
+    console.log('[*] enabling Content-Security-Policy');
+    isActive = true;
+    cspHeaders = { name: "Content-Security-Policy", value: request.csp };
+    CSP.browser.setIcon('on');
+  } else if (request.action == "csp-report-on") {
+    console.log('[*] enabling Content-Security-Policy-Report-Only');
+    isActive = true;
+    cspHeaders = { "name": "Content-Security-Policy-Report-Only", "value": request.csp };
+    CSP.browser.setIcon('on');
+  } else if (request.action == "csp-off") {
+    console.log('[*] disabling CSP');
+    isActive = false;
+    CSP.browser.setIcon('off');
   }
 });

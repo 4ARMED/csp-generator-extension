@@ -6,33 +6,23 @@
 	<link rel="stylesheet" type="text/css" href="css/popup.css">
 </head>
 <body>
+	<h1>CSP Generator</h1>
 	<div class="container">
-		<h1>CSP Generator</h1>
 		<form id="csp-generator">
 		<div class="csp-entry">
 			<div class="form-group">
-				<button id="reset">Reset to Default CSP</button>
 				<button id="generate">Fetch Generated CSP</button>
-				<button id="clear">Clear</button>
+				<button id="save">Save CSP</button>
+				<button id="reset">Reset to Default CSP</button>
 				<textarea id="generated-csp" placeholder="" class="form-control"></textarea>
 			</div>
 			<div class="form-group switch-field">
-<!-- 				<fieldset>
-					<label for="csp-on">On</label>
-					<input type="radio" id="csp-on" name="csp" value="csp-on" data-toggle="tooltip" title="Sets the CSP header with the value of the above box (for all sites)"></input>
-					<label for="csp-report-on">Report Only
-					<input type="radio" id="csp-report-on" name="csp" value="csp-report-on" data-toggle="tooltip" title="Enables a restrictive Report-Only CSP with report-uri"></input>
-					<label for="csp-off">Off</label>
-					<input type="radio" id="csp-off" name="csp" value="csp-off" data-toggle="tooltip" title="Turn off all CSP headers"></input>
-				</fieldset> -->
-					
-					<input type="radio" id="csp-on" name="csp" value="csp-on" data-toggle="tooltip" title="Sets the CSP header with the value of the above box (for all sites)"></input>
-					<label for="csp-on">On</label>
-					<input type="radio" id="csp-report-on" name="csp" value="csp-report-on" data-toggle="tooltip" title="Enables a restrictive Report-Only CSP with report-uri"></input>
-					<label for="csp-report-on">Report Only</label>
-					<input type="radio" id="csp-off" name="csp" value="csp-off" data-toggle="tooltip" title="Turn off all CSP headers"></input>
-					<label for="csp-off">Off</label>
-				</div>
+				<input type="radio" id="csp-on" name="csp" value="csp-on" data-toggle="tooltip" title="Sets the CSP header with the value of the above box (for all sites)"></input>
+				<label for="csp-on">On</label>
+				<input type="radio" id="csp-report-on" name="csp" value="csp-report-on" data-toggle="tooltip" title="Enables a restrictive Report-Only CSP with report-uri"></input>
+				<label for="csp-report-on">Report Only</label>
+				<input type="radio" id="csp-off" name="csp" value="csp-off" data-toggle="tooltip" title="Turn off all CSP headers"></input>
+				<label for="csp-off">Off</label>
 			</div>
 		</div>
 		<div>

@@ -16,6 +16,12 @@ CSP.browser = {
   	chrome.storage.sync.get(key, function(item){
   		callback(item);
   	});
+  },
+  setIcon: function(state) {
+    var details = {
+        path: "images/popup-" + state + ".png"
+    };
+    chrome.browserAction.setIcon(details);
   }
 }
 

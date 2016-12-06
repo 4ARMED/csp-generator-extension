@@ -1,15 +1,19 @@
 body {
   width: 500px;
-  background: #efefef;
+  background: #fff;
   color: #666;
 }
 
 h1 {
-	color: #f24c27;
-    font-weight: normal;
-    font-size: 20px;
+	background-color: #024959;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 24px;
     text-transform: uppercase;
     line-height: 1.5em;
+    margin-top: 0;
+    font-weight: normal;
 }
 
 /*#container {
@@ -57,21 +61,18 @@ button {
     margin-bottom: 5px;
 }
 
-button#save-report-uri {
-	padding: 6px 30px;
-	margin-right: 0;
-	margin-bottom: 0;
+button#save {
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
-#status {
-	display: inline-block;
-	color: #f24c27;
+.btn-disabled {
+	opacity: 0.5;
 }
 
-
+/* Great piece of code adapted from http://thestizmedia.com/radio-buttons-as-toggle-buttons-with-css/ */
 .switch-field {
-  padding: 40px;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .switch-title {
@@ -88,7 +89,6 @@ button#save-report-uri {
 
 .switch-field label {
   display: inline-block;
-  width: 60px;
   background-color: #e4e4e4;
   color: rgba(0, 0, 0, 0.6);
   font-size: 14px;
@@ -111,9 +111,10 @@ button#save-report-uri {
 }
 
 .switch-field input:checked + label {
-  background-color: #A5DC86;
+  background-color: #037e8c;
   -webkit-box-shadow: none;
   box-shadow: none;
+  color: #fff;
 }
 
 .switch-field label:first-of-type {
