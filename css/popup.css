@@ -8,9 +8,7 @@ body {
 }
 
 #current-csp, #generated-csp {
-	min-height: 120px;
-	border: 1px solid #404040;
-	background: #fff;
+	min-height: 150px;
 }
 
 .csp-entry {

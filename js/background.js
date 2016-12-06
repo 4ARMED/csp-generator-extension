@@ -1,4 +1,4 @@
-var isActive = true;
+var isActive = false;
 
 var callback = function(details) {
   if (!isActive) {
@@ -26,12 +26,12 @@ var filter = {
 
 chrome.webRequest.onHeadersReceived.addListener(callback, filter, ["blocking", "responseHeaders"]);
 
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-    var state = isActive ? 'off' : 'on';
-    var details = {
-        path: "images/popup-" + state + ".png"
-    };
-    chrome.browserAction.setIcon(details);
-    isActive = !isActive;
+chrome.runtime.onMessage.addListener(function(request, sender) {
+  if (request.action == "generate") {
+    console.log('[*] fetching policy for ' + request.host);
+    $.get('https://csp.4armed.io/policy/' + request.host, function(data){
+      console.log(data);
+      chrome.runtime.sendMessage(data);
+    })
+  }
 });

@@ -1,12 +1,12 @@
 $(function(){
-  "use strict";
+
+	console.log('[*] page loaded');
 
 	// Saves options to chrome.storage
 	function saveOptions() {
 		console.log('[*] saveOptions called');
 		var generatedCSPHeaders = $('#generated-csp').val();
 		var cspHeaderStatus = $('input[name=csp]:checked', '#csp-generator').val();
-		var cspReportHeaderStatus = $('input[name=csp-report]:checked', '#csp-generator').val();
 
 		console.log($('#generated-csp').val());
 		CSP.browser.set({ 'generatedCSPHeaders': generatedCSPHeaders }, function(result){
@@ -17,16 +17,12 @@ $(function(){
 			console.log('[*] cspHeaderStatus:');
 			console.log(result);
 		});
-		CSP.browser.set({ 'cspReportHeaderStatus': cspReportHeaderStatus }, function(result){
-			console.log('[*] cspReportHeaderStatus:');
-			console.log(result);
-		});
 
 		// Update status to let user know options were saved.
 		$('#status').text('Options saved');
-		// setTimeout(function() {
-		//   $('#status').text('');
-		// }, 5000);
+		setTimeout(function() {
+		  $('#status').text('');
+		}, 5000);
 	}
 
 	// Restores options state using the preferences
@@ -34,27 +30,11 @@ $(function(){
 	function restoreOptions() {
 		console.log('[*] restoreOptions called');
 		CSP.browser.get('cspHeaderStatus', function(item){
-			if (item.cspHeaderStatus === "true") {
-				$('#csp-on').prop("checked", true);
-				$('#csp-off').prop("checked", false);
-				// CSP.util.setActive('on');
-			} else {
-				$('#csp-on').prop("checked", false);
-				$('#csp-off').prop("checked", true);
-				// CSP.util.setActive('off');
+			if (item.cspHeaderStatus) {
+				$('#'+item.cspHeaderStatus).prop("checked", true);
 			}
 		});
-		CSP.browser.get('cspReportHeaderStatus', function(item){
-			if (item.cspReportHeaderStatus === "true") {
-				$('#csp-report-on').prop("checked", true);
-				$('#csp-report-off').prop("checked", false);
-				// CSP.util.setActive('on');
-			} else {
-				$('#csp-report-on').prop("checked", false);
-				$('#csp-report-off').prop("checked", true);
-				// CSP.util.setActive('off');
-			}
-		});
+
 		CSP.browser.get('generatedCSPHeaders', function(item){
 			if (item.generatedCSPHeaders) {
 				$('#generated-csp').val(item.generatedCSPHeaders);
@@ -66,30 +46,37 @@ $(function(){
 
 	function sendGenerate() {
 		console.log('[*] sendGenerate');
-		var targetHost;
 		CSP.browser.getCurrentHost(function(result){
-			sleep(1000).then(() => { targetHost = result; });
-		});
-
-		chrome.runtime.sendMessage({action: "generate"}, function(response) {
-			console.log('[*] sendMessage');
-			var cspText = response;
-			// updatePopupGeneratedCSP();
+			var message = { action: "generate", host: result };
+			chrome.runtime.sendMessage(message, function(response) {
+				console.log('[*] Fly my pretties!');
+			});
 		});
 	}
 
-	// function clearGenerated() {
-	// 	document.getElementById('generated-csp').value = '';
-	// }
-
-	function sleep (time) {
-	  return new Promise((resolve) => setTimeout(resolve, time));
+	function clearGenerated() {
+		$('#generated-csp').val('');
 	}
+
+	chrome.runtime.onMessage.addListener(function(request, sender){
+		if (request.policy) {
+			$('#generated-csp').val(request.policy);
+		}
+	})
 
 	// Event Listeners
-	$('#save').click(saveOptions);
-	$('#generate').click(sendGenerate);
-	// $('#clear').click(clearGenerated);
-	$( document ).ready(restoreOptions);
+	$('#save').click(function(event) {
+		event.preventDefault();
+		saveOptions();
+	});
+	$('#generate').click(function(event) {
+		event.preventDefault();
+		sendGenerate();
+	});
+	$('#clear').click(function(event) {
+		event.preventDefault();
+		clearGenerated();
+	});
+	$( restoreOptions ); 
 
-}());
+});

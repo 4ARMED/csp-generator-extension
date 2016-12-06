@@ -2,28 +2,35 @@
 <html>
 <head>
 	<title>4ARMED CSP Generator</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/popup.css">
 </head>
 <body>
 	<div id="container">
 		<form id="csp-generator">
 		<div class="csp-entry">
-			<button id="generate">Generate CSP</button><button id="clear">Clear</button>
-			<textarea id="generated-csp" placeholder="Set this to nothing to remove the current CSP headers"></textarea>
-			<fieldset>
-				<legend>Content-Security-Policy</legend>
-				<label for="csp-on">On</label>
-				<input type="radio" id="csp-on" name="csp" value="true"></input>
-				<label for="csp-off">Off</label>
-				<input type="radio" id="csp-off" name="csp" value="false"></input>
-			</fieldset>
-			<fieldset>
-				<legend>Content-Security-Policy-Report-Only</legend>
-				<label for="csp-report-on">On</label>
-				<input type="radio" id="csp-report-on" name="csp-report" value="true"></input>
-				<label for="csp-report-off">Off</label>
-				<input type="radio" id="csp-report-off" name="csp-report" value="false"></input>
-			</fieldset>
+			<div class="form-group">
+				<fieldset>
+					<legend>Record Violations</legend>
+					<label for="csp-report-on">On</label>
+					<input type="radio" id="csp-report-on" name="csp" value="csp-report-on" data-toggle="tooltip" title="Enables a restrictive Report-Only CSP with report-uri"></input>
+					<label for="csp-report-off">Off</label>
+					<input type="radio" id="csp-report-off" name="csp" value="csp-report-off" data-toggle="tooltip" title="Turn off Report-Only header"></input>
+				</fieldset>
+			</div>
+			<div class="form-group">
+				<button id="generate">Fetch Generated CSP</button><button id="clear">Clear</button>
+				<textarea id="generated-csp" placeholder="Set this to nothing to remove the current CSP headers" class="form-control"></textarea>
+			</div>
+			<div class="form-group">
+				<fieldset>
+					<legend>Use this CSP header</legend>
+					<label for="csp-on">On</label>
+					<input type="radio" id="csp-on" name="csp" value="csp-on" data-toggle="tooltip" title="Sets the CSP header with the value of the above box (for all sites)"></input>
+					<label for="csp-off">Off</label>
+					<input type="radio" id="csp-off" name="csp" value="csp-off" data-toggle="tooltip" title="Turn off all CSP headers"></input>
+				</fieldset>
+			</div>
 		</div>
 		<div>
 			<button id="save">Save</button>
@@ -33,6 +40,7 @@
 	</div>
 
 	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/common.js"></script>
 	<script src="js/popup.js"></script>
 

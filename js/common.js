@@ -25,6 +25,8 @@ CSP.util = {
   	console.log('[*] parseURL: ');
   	console.log(url);
     var hack = document.createElement('a');
+    hack.href = url;
+    console.log(hack.host);
     return hack.host;
   },
   setActive: function(state) {
