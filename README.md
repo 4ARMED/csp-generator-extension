@@ -49,3 +49,9 @@ There are only two options for this extension, both can be configured from the [
 
 ## Using
 
+See the video on YouTube at https://youtu.be/nr5PFxDm3uo. It really is the easiest way to see what it does!
+
+## Fork it!
+
+Please do feel free to submit changes. Please fork this repo and send a pull request from a dedicated branch.
+
