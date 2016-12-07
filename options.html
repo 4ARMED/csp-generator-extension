@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>4ARMED CSP Generator Options</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/options.css">
+</head>
+
+<body>
+	<div class="container">
+		<form id="options-form">
+			<div class="form-group">
+				<label for="csp-generator-url">Enter 4ARMED CSP Generator URL</label>
+				<input id="csp-generator-url" name="csp-generator-url" type="text" class="form-control" placeholder="Enter the URL to your 4ARMED CSP Generator server"></input>
+			</div>
+			<div class="checkbox">
+				<label for="unsafe">
+					<input id="unsafe" name="unsafe" type="checkbox"> Permit unsafe-inline/unsafe-eval in generated CSP
+				</label>
+			</div>
+			<button type="submit" id="save" class="btn btn-default">Save</button>
+		</form>
+		<div id="status"></div>
+	</div>
+
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/options.js"></script>
+</body>
+</html>

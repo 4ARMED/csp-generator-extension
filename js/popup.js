@@ -100,7 +100,7 @@ $(function(){
 		event.preventDefault();
 		$('#generated-csp').val(defaultCSPHeader);
 		$('#save').prop('disabled', false).removeClass('btn-disabled');
-		CSP.util.updateStatus('CSP Reset. Save and toggle CSP on/off to activate.');
+		CSP.util.updateStatus('CSP Reset. Remember to save.');
 	});
 	$('input[name=csp]').change(function(event) {
 		event.preventDefault();

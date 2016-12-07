@@ -28,11 +28,14 @@ chrome.webRequest.onHeadersReceived.addListener(callback, filter, ["blocking", "
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "generate") {
-    console.log('[*] fetching policy for ' + request.host);
-    $.get('https://csp.4armed.io/policy/' + request.host, function(data){
-      console.log(data);
-      chrome.runtime.sendMessage(data);
-    })
+    chrome.storage.sync.get({
+      cspGeneratorUrl: 'https://csp.4armed.io',
+      unsafe: false
+    }, function(items) {
+      $.get(items.cspGeneratorUrl + '/policy/' + request.host + (items.unsafe === true ? '?unsafe=1' : ''), function(data){
+        chrome.runtime.sendMessage(data);
+      })
+    });
   } else if (request.action == "csp-on") {
     console.log('[*] enabling Content-Security-Policy');
     isActive = true;

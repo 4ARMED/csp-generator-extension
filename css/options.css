@@ -1,0 +1,12 @@
+.container {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+label {
+	font-weight: normal;
+}
+
+#status {
+	min-height: 50px;
+}
