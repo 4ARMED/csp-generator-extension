@@ -32,7 +32,9 @@ $(function(){
 	// Restores options state using the preferences
 	// stored in chrome.storage.
 	function restoreOptions() {
-		CSP.browser.get('cspHeaderStatus', function(item){
+		chrome.storage.sync.get({
+			cspHeaderStatus: 'csp-off'
+		}, function(item){
 			if (item.cspHeaderStatus) {
 				$('#'+item.cspHeaderStatus).prop("checked", true);
 				if (item.cspHeaderStatus == 'csp-off') {
@@ -40,16 +42,20 @@ $(function(){
 				} else {
 					CSP.browser.setIcon('on');
 				}
-			}
-		});
+			} 
+		})
 
-		CSP.browser.get('generatedCSPHeaders', function(item){
-			if (item.generatedCSPHeaders) {
-				$('#generated-csp').val(item.generatedCSPHeaders);
-			} else {
-				$('#generated-csp').val(defaultCSPHeader);
-			}
-		});
+		// Behold the nesting!
+		chrome.storage.sync.get({
+			cspGeneratorUrl: 'https://csp.4armed.io'
+		}, function(cspUrl){
+			var defaultCSPHeader = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; report-uri " + cspUrl.cspGeneratorUrl + "/report;";
+			chrome.storage.sync.get({
+				generatedCSPHeaders: defaultCSPHeader
+			}, function(items){
+				$('#generated-csp').val(items.generatedCSPHeaders);
+			});
+		})
 
 		$('#save').prop('disabled', true).addClass('btn-disabled');
 	}
