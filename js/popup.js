@@ -13,7 +13,7 @@ $(function(){
 	}
 
 	// Saves options to chrome.storage
-	function saveOptions() {
+	function saveOptions(quiet) {
 		console.log('[*] saveOptions called');
 		var generatedCSPHeaders = $('#generated-csp').val();
 		var cspHeaderStatus = $('input[name=csp]:checked', '#csp-generator').val();
@@ -26,7 +26,7 @@ $(function(){
 		});
 
 		// Update status to let user know options were saved.
-		CSP.util.updateStatus('Options saved');
+		if (quiet !== true ) { CSP.util.updateStatus('Options saved'); }
 	}
 
 	// Restores options state using the preferences
@@ -54,6 +54,7 @@ $(function(){
 				generatedCSPHeaders: defaultCSPHeader
 			}, function(items){
 				$('#generated-csp').val(items.generatedCSPHeaders);
+				saveOptions(true);
 			});
 		})
 
