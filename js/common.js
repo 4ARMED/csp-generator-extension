@@ -32,8 +32,7 @@ CSP.util = {
   	console.log(url);
     var hack = document.createElement('a');
     hack.href = url;
-    console.log(hack.host);
-    return hack.host;
+    return encodeURIComponent(hack.host);
   },
   updateStatus: function(text) {
     $('#status').text(text).addClass('alert alert-success');

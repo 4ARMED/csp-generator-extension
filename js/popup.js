@@ -1,7 +1,5 @@
 $(function(){
 
-	var defaultCSPHeader = "default-src 'none'; script-src 'none'; connect-src 'none'; font-src 'none'; img-src 'none'; style-src 'none'; frame-src 'none'; report-uri https://csp.4armed.io/report;";
-
 	// Enable/disable interception
 	function setCSPHeaders() {
 		var cspHeaderStatus = $('input[name=csp]:checked', '#csp-generator').val();
@@ -56,6 +54,15 @@ $(function(){
 		$('#save').prop('disabled', true).addClass('btn-disabled');
 	}
 
+	function resetCSP() {
+		chrome.storage.sync.get({
+			cspGeneratorUrl: 'https://csp.4armed.io'
+	    }, function(items) {
+			var defaultCSPHeader = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; report-uri " + items.cspGeneratorUrl + "/report;";
+			$('#generated-csp').val(defaultCSPHeader);
+		});
+	}
+
 	function sendGenerate() {
 		console.log('[*] sendGenerate');
 		CSP.browser.getCurrentHost(function(result){
@@ -98,7 +105,7 @@ $(function(){
 	});
 	$('#reset').click(function(event) {
 		event.preventDefault();
-		$('#generated-csp').val(defaultCSPHeader);
+		resetCSP();
 		$('#save').prop('disabled', false).removeClass('btn-disabled');
 		CSP.util.updateStatus('CSP Reset. Remember to save.');
 	});
